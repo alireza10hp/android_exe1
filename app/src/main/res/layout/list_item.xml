@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:text="Course id"
             android:textSize="23sp"
-            android:id="@+id/date"
+            android:id="@+id/course_id"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="match_parent"
