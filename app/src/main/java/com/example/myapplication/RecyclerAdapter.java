@@ -2,9 +2,12 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,6 +96,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             String info = course.getInfo();
 
             //todo check overlap
+            PopupMenu popupMenu = new PopupMenu(context, this.name);
+
+            // Inflating popup menu from popup_menu.xml file
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    // Toast message on menu item clicked
+                    Toast.makeText(context, "You Clicked " + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+            // Showing the popup menu
+            popupMenu.show();
             Toast.makeText(context, "The position is " + String.valueOf(position) +
                     " Name: " + name + ", info:" + info + ", course_id:" + course_id, Toast.LENGTH_SHORT).show();
 

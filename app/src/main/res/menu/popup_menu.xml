@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/info"
+        android:title="info" />
+
+    <item
+        android:id="@+id/course_id"
+        android:title="course_id" />
+
+    <item
+        android:id="@+id/course_number"
+        android:title="course_number" />
+
+    <item
+        android:id="@+id/name"
+        android:title="name" />
+    <item
+        android:id="@+id/units"
+        android:title="units" />
+    <item
+        android:id="@+id/capacity"
+        android:title="capacity" />
+    <item
+        android:id="@+id/instructor"
+        android:title="instructor" />
+    <item
+        android:id="@+id/class_time"
+        android:title="class_time" />
+    <item
+        android:id="@+id/id"
+        android:title="id" />
+    <item
+        android:id="@+id/exam_time"
+        android:title="exam_time" />
+
+</menu>
