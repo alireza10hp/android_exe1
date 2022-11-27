@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 int units = itemObj.getInt("units");
                 int capacity = itemObj.getInt("capacity");
                 String instructor = itemObj.getString("instructor");
-                String class_time = itemObj.getString("class_time");
+                String class_time = itemObj.getString("class_times");
                 int id = itemObj.getInt("id");
                 String exam_time = itemObj.getString("exam_time");
 
