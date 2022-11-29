@@ -1,30 +1,30 @@
-package com.example.myapplication;
+package com.example.myapplication.models;
 
 public class Course {
 
     private String info;
-    private String course_id;
-    private String course_number;
+    private String courseId;
+    private String courseNumber;
     private String name;
     private int units;
     private int capacity;
     private String instructor;
-    private String class_time;
+    private String classTime;
     private int id;
-    private String exam_time;
+    private String examTime;
 
-    public Course(String info, String course_id, String course_number, String name,
-                  int units, int capacity, String instructor, String class_time, int id, String exam_time) {
+    public Course(String info, String courseId, String courseNumber, String name,
+                  int units, int capacity, String instructor, String classTime, int id, String examTime) {
         this.info = info;
-        this.course_id = course_id;
-        this.course_number = course_number;
+        this.courseId = courseId;
+        this.courseNumber = courseNumber;
         this.name = name;
         this.units = units;
         this.capacity = capacity;
         this.instructor = instructor;
-        this.class_time = class_time;
+        this.classTime = classTime;
         this.id = id;
-        this.exam_time = exam_time;
+        this.examTime = examTime;
 
     }
 
@@ -37,20 +37,20 @@ public class Course {
         this.info = info;
     }
 
-    public String getCourse_id() {
-        return course_id;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public String getCourse_number() {
-        return course_number;
+    public String getCourseNumber() {
+        return courseNumber;
     }
 
-    public void setCourse_number(String course_number) {
-        this.course_number = course_number;
+    public void setCourseNumber(String courseNumber) {
+        this.courseNumber = courseNumber;
     }
 
     public int getUnits() {
@@ -77,12 +77,12 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public String getClass_time() {
-        return class_time;
+    public String getClassTime() {
+        return classTime;
     }
 
-    public void setClass_time(String class_time) {
-        this.class_time = class_time;
+    public void setClassTime(String classTime) {
+        this.classTime = classTime;
     }
 
     public int getId() {
@@ -93,12 +93,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getExam_time() {
-        return exam_time;
+    public String getExamTime() {
+        return examTime;
     }
 
-    public void setExam_time(String exam_time) {
-        this.exam_time = exam_time;
+    public void setExamTime(String examTime) {
+        this.examTime = examTime;
     }
 
     public String getName() {

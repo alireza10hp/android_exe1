@@ -1,12 +1,14 @@
-package com.example.myapplication;
-import android.content.Intent;
+package com.example.myapplication.activities;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.models.Course;
+import com.example.myapplication.R;
+import com.example.myapplication.adapters.RecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             String jsonString = null;
-            inputStream = getResources().openRawResource(R.raw.c3);
+            inputStream = getResources().openRawResource(R.raw.c38);
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(inputStream, "UTF-8"));
 

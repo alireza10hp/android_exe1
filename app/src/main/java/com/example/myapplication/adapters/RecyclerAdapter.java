@@ -1,8 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
+import com.example.myapplication.activities.MainActivity;
+import com.example.myapplication.models.Course;
 
 import java.util.List;
 
@@ -60,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Course course = (Course) listRecyclerItem.get(i);
 
         itemViewHolder.name.setText(course.getName());
-        itemViewHolder.course_id.setText(course.getCourse_id());
+        itemViewHolder.course_id.setText(course.getCourseId());
         itemViewHolder.info.setText(course.getInfo());
 
     }
@@ -92,7 +95,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int position = this.getAdapterPosition();
             Course course = listRecyclerItem.get(position);
             String name = course.getName();
-            String course_id = course.getCourse_id();
+            String course_id = course.getCourseId();
             String info = course.getInfo();
 
             //todo check overlap
