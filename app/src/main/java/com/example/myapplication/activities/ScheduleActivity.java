@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.myapplication.R;
 
-public class WeeklyActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weekly);
+        setContentView(R.layout.activity_schedule);
     }
 }
