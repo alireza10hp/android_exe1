@@ -1,14 +1,24 @@
 package com.example.myapplication.activities;
+
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.myapplication.adapters.TabAdapter;
+import com.example.myapplication.fragments.CourseListFragment;
+import com.example.myapplication.fragments.Tab1Fragment;
+import com.example.myapplication.fragments.Tab2Fragment;
 import com.example.myapplication.models.Course;
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.RecyclerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,80 +41,47 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    ///
+    private TabAdapter adapter;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        setContentView(R.layout.activity_main);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+        adapter = new TabAdapter(this);
+        adapter.addFragment(new Tab1Fragment(), "Tab 1");
+        adapter.addFragment(new Tab2Fragment(), "Tab 2");
+        adapter.addFragment(new CourseListFragment(), "course list");
+        viewPager.setAdapter(adapter);
 
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> tab.setText(adapter.getTabTitle(position))).attach();
 
-        // specify an adapter (see also next example)
-        mAdapter = new RecyclerAdapter(this, viewItems);
-        mRecyclerView.setAdapter(mAdapter);
+        /////
 
-        addItemsFromJSON();
+//        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+//
+//        // use this setting to improve performance if you know that changes
+//        // in content do not change the layout size of the RecyclerView
+//        mRecyclerView.setHasFixedSize(true);
+//
+//        // use a linear layout manager
+//        layoutManager = new LinearLayoutManager(this);
+//        mRecyclerView.setLayoutManager(layoutManager);
+//
+//        // specify an adapter (see also next example)
+//        mAdapter = new RecyclerAdapter(this, viewItems);
+//        mRecyclerView.setAdapter(mAdapter);
+//
+//        addItemsFromJSON();
 
     }
 
-    private void addItemsFromJSON() {
-        try {
 
-            String jsonDataString = readJSONDataFromFile();
-            JSONArray jsonArray = new JSONArray(jsonDataString);
-
-            for (int i=0; i<jsonArray.length(); ++i) {
-
-                JSONObject itemObj = jsonArray.getJSONObject(i);
-
-                String info = itemObj.getString("info");
-                String course_id = itemObj.getString("course_id");
-                String course_number = itemObj.getString("course_number");
-                String name = itemObj.getString("name");
-                int units = itemObj.getInt("units");
-                int capacity = itemObj.getInt("capacity");
-                String instructor = itemObj.getString("instructor");
-                String class_time = itemObj.getString("class_times");
-                int id = itemObj.getInt("id");
-                String exam_time = itemObj.getString("exam_time");
-
-                Course course = new Course(info,course_id,course_number,name,units,capacity,instructor,class_time,id,exam_time);
-                viewItems.add(course);
-            }
-
-        } catch (JSONException | IOException e) {
-            Log.d(TAG, "addItemsFromJSON: ", e);
-        }
-    }
-
-    private String readJSONDataFromFile() throws IOException{
-
-        InputStream inputStream = null;
-        StringBuilder builder = new StringBuilder();
-
-        try {
-
-            String jsonString = null;
-            inputStream = getResources().openRawResource(R.raw.c38);
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(inputStream, "UTF-8"));
-
-            while ((jsonString = bufferedReader.readLine()) != null) {
-                builder.append(jsonString);
-            }
-
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-        return new String(builder);
-    }
 }
