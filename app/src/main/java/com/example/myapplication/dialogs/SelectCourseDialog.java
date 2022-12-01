@@ -15,6 +15,9 @@ import androidx.annotation.NonNull;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Course;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class SelectCourseDialog extends Dialog implements View.OnClickListener {
 
     private final Context context;
@@ -22,6 +25,8 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
 
     private Button cancel, select;
     private TextView name, info, courseNumber;
+
+    ArrayList<Course> selectedCourses = new ArrayList<>();
 
     public SelectCourseDialog(@NonNull Context context, Course course) {
         super(context);
@@ -55,11 +60,33 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.btn_select:
-                Toast.makeText(context, "selected "+course.getCourseId(), Toast.LENGTH_SHORT).show();
+                if (selectedCourses.size() == 0 || !isOverlapped()) {
+                    selectedCourses.add(course);
+                    Toast.makeText(context, "selected " + course.getCourseId(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "overlap ! ", Toast.LENGTH_SHORT).show();
+
+                }
                 break;
             default:
                 break;
         }
         dismiss();
+    }
+
+    public boolean isOverlapped() {
+        for (int i = 0; i < selectedCourses.size(); i++) {
+            int dayLength = selectedCourses.get(i).getDays().size();
+            for (int j = 0; j < dayLength; j++) {
+                for (int k = 0; k < course.getDays().size(); k++) {
+                    if (Objects.equals(selectedCourses.get(i).getDays().get(j), course.getDays().get(k))) {
+                        if (selectedCourses.get(i).getEndTimes().get(j) > course.getStartTimes().get(k) ||
+                                selectedCourses.get(i).getStartTimes().get(j) < course.getEndTimes().get(k))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
