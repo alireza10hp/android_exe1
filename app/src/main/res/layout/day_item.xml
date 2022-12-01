@@ -16,6 +16,7 @@
             android:layout_column="1"
             android:textStyle="bold"
             android:textSize="20sp"
+            android:layout_weight="1"
             android:text="@string/day" />
 
     </TableRow>
@@ -26,8 +27,8 @@
             android:id="@+id/day_course_rc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_column="2"
-
+            android:layout_weight="1"
+            android:scrollbars="vertical"
             tools:listitem="@layout/day_course_item"/>
 
     </TableRow>

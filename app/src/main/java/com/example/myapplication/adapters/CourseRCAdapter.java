@@ -15,13 +15,13 @@ import com.example.myapplication.models.Course;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CourseRCAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE = 1;
     private final Context context;
     private final List<Course> listRecyclerItem;
 
-    public RecyclerAdapter(Context context, List<Course> listRecyclerItem) {
+    public CourseRCAdapter(Context context, List<Course> listRecyclerItem) {
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
     }
@@ -56,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int viewType = getItemViewType(i);
 
         ViewHolder itemViewHolder = (ViewHolder) viewHolder;
-        Course course = (Course) listRecyclerItem.get(i);
+        Course course = listRecyclerItem.get(i);
 
         itemViewHolder.name.setText(course.getName());
         itemViewHolder.course_id.setText(course.getCourseId());
@@ -69,7 +69,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return listRecyclerItem.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
         public TextView info;
         public TextView course_id;

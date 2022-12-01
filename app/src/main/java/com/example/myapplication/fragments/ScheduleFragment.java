@@ -7,14 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapters.DaysRecyclerAdapter;
-import com.example.myapplication.adapters.RecyclerAdapter;
-import com.example.myapplication.models.Day;
+import com.example.myapplication.adapters.DaysRCAdapter;
+import com.example.myapplication.adapters.DottedDividerItemDecoration;
 import com.example.myapplication.models.Schedule;
 
 import java.util.ArrayList;
@@ -45,17 +46,21 @@ public class ScheduleFragment extends Fragment {
 
         days_rc = (RecyclerView) getView().findViewById(R.id.schedule_recycler);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         days_rc.setHasFixedSize(true);
 
-        // use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
         days_rc.setLayoutManager(layoutManager);
 
-        // specify an adapter (see also next example)
-        rcAdapter = new DaysRecyclerAdapter(getContext(), schedules.get(0).getDays());
+        rcAdapter = new DaysRCAdapter(getContext(), schedules.get(0).getDays());
         days_rc.setAdapter(rcAdapter);
+
+        // add decoration
+//        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+//        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.item_divider));
+//        days_rc.addItemDecoration(itemDecorator);
+
+        DottedDividerItemDecoration decorator = new DottedDividerItemDecoration(ContextCompat.getDrawable(getContext(), R.drawable.item_divider));
+        days_rc.addItemDecoration(decorator);
 
 //        addItemsFromJSON();
 

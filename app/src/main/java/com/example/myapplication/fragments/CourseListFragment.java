@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapters.RecyclerAdapter;
+import com.example.myapplication.adapters.CourseRCAdapter;
 import com.example.myapplication.models.Course;
 
 import org.json.JSONArray;
@@ -58,7 +58,7 @@ public class CourseListFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerAdapter(getContext(), viewItems);
+        mAdapter = new CourseRCAdapter(getContext(), viewItems);
         mRecyclerView.setAdapter(mAdapter);
 
         addItemsFromJSON();

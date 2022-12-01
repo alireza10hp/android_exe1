@@ -1,23 +1,19 @@
 package com.example.myapplication.adapters;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabAdapter extends FragmentStateAdapter {
+public class MainTabAdapter extends FragmentStateAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
 
-    public TabAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public MainTabAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -33,7 +29,6 @@ public class TabAdapter extends FragmentStateAdapter {
     }
 
 
-    /////
     public String getTabTitle(int position) {
         return mFragmentTitleList.get(position);
     }
