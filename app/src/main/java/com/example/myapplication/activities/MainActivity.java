@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.adapters.TabAdapter;
 import com.example.myapplication.fragments.CourseListFragment;
+import com.example.myapplication.fragments.ScheduleFragment;
 import com.example.myapplication.fragments.Tab1Fragment;
 import com.example.myapplication.fragments.Tab2Fragment;
 import com.example.myapplication.models.Course;
@@ -56,9 +57,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
 
         adapter = new TabAdapter(this);
-        adapter.addFragment(new Tab1Fragment(), "Tab 1");
-        adapter.addFragment(new Tab2Fragment(), "Tab 2");
         adapter.addFragment(new CourseListFragment(), "course list");
+        adapter.addFragment(new ScheduleFragment(), "schedule");
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> tab.setText(adapter.getTabTitle(position))).attach();

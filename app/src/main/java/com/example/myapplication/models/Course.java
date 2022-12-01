@@ -21,6 +21,13 @@ public class Course {
     private ArrayList<Float> endTimes = new ArrayList<>();
     private ArrayList<Integer> days = new ArrayList<>();
 
+    public Course(String name, String info, String courseId, String courseNumber) {
+        this.name = name;
+        this.info = info;
+        this.courseId = courseId;
+        this.courseNumber = courseNumber;
+    }
+
     public Course(String info, String courseId, String courseNumber, String name,
                   int units, int capacity, String instructor, String classTime, int id, String examTime) {
         this.info = info;
