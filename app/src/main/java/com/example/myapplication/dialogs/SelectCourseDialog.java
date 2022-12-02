@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
+import com.example.myapplication.dao.CourseDao;
 import com.example.myapplication.models.Course;
+import com.example.myapplication.viewmodels.CourseViewModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,10 +30,13 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
 
     ArrayList<Course> selectedCourses = new ArrayList<>();
 
-    public SelectCourseDialog(@NonNull Context context, Course course) {
+    private final CourseViewModel viewModel;
+
+    public SelectCourseDialog(@NonNull Context context, CourseViewModel viewModel, Course course) {
         super(context);
         this.context = context;
         this.course = course;
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -62,6 +67,7 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
             case R.id.btn_select:
                 if (selectedCourses.size() == 0 || !isOverlapped()) {
                     selectedCourses.add(course);
+                    saveCourse(course);
                     Toast.makeText(context, "selected " + course.getCourseId(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "overlap ! ", Toast.LENGTH_SHORT).show();
@@ -75,18 +81,25 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
     }
 
     public boolean isOverlapped() {
-        for (int i = 0; i < selectedCourses.size(); i++) {
-            int dayLength = selectedCourses.get(i).getDays().size();
-            for (int j = 0; j < dayLength; j++) {
-                for (int k = 0; k < course.getDays().size(); k++) {
-                    if (Objects.equals(selectedCourses.get(i).getDays().get(j), course.getDays().get(k))) {
-                        if (selectedCourses.get(i).getEndTimes().get(j) > course.getStartTimes().get(k) ||
-                                selectedCourses.get(i).getStartTimes().get(j) < course.getEndTimes().get(k))
-                            return true;
-                    }
-                }
-            }
-        }
+//        for (int i = 0; i < selectedCourses.size(); i++) {
+//            int dayLength = selectedCourses.get(i).getDays().size();
+//            for (int j = 0; j < dayLength; j++) {
+//                for (int k = 0; k < course.getDays().size(); k++) {
+//                    if (Objects.equals(selectedCourses.get(i).getDays().get(j), course.getDays().get(k))) {
+//                        if (selectedCourses.get(i).getEndTimes().get(j) > course.getStartTimes().get(k) ||
+//                                selectedCourses.get(i).getStartTimes().get(j) < course.getEndTimes().get(k))
+//                            return true;
+//                    }
+//                }
+//            }
+//        }
         return false;
+    }
+
+    private void saveCourse(Course course) {
+        viewModel.insert(course);
+
+        // displaying a toast message after adding the data
+        Toast.makeText(context, "Course has been saved to Room Database. ", Toast.LENGTH_SHORT).show();
     }
 }

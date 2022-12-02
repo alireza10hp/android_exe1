@@ -1,5 +1,6 @@
 package com.example.myapplication.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,23 +8,43 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.dialogs.SelectCourseDialog;
 import com.example.myapplication.models.Course;
+import com.example.myapplication.viewmodels.CourseViewModel;
 
 import java.util.List;
 
-public class CourseRCAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CourseRCAdapter extends ListAdapter<Course, RecyclerView.ViewHolder> {
 
     private static final int TYPE = 1;
     private final Context context;
     private final List<Course> listRecyclerItem;
 
-    public CourseRCAdapter(Context context, List<Course> listRecyclerItem) {
+    private CourseViewModel viewModel;
+
+    // creating a call back for item of recycler view.
+    private static final DiffUtil.ItemCallback<Course> DIFF_CALLBACK = new DiffUtil.ItemCallback<Course>() {
+        @Override
+        public boolean areItemsTheSame(Course oldItem, Course newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(Course oldItem, Course newItem) {
+            return oldItem.getCourseId().equals(newItem.getCourseId());
+        }
+    };
+
+    public CourseRCAdapter(Context context, List<Course> listRecyclerItem, CourseViewModel viewModel) {
+        super(DIFF_CALLBACK);
         this.context = context;
         this.listRecyclerItem = listRecyclerItem;
+        this.viewModel = viewModel;
     }
 
 //    public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +111,7 @@ public class CourseRCAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             int position = this.getAdapterPosition();
             Course course = listRecyclerItem.get(position);
 
-            SelectCourseDialog d = new SelectCourseDialog(context, course);
+            SelectCourseDialog d = new SelectCourseDialog(context, viewModel, course);
             d.show();
         }
     }

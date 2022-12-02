@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapters.CourseRCAdapter;
 import com.example.myapplication.models.Course;
+import com.example.myapplication.viewmodels.CourseViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,10 +35,16 @@ public class CourseListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Course> viewItems = new ArrayList<>();
 
-    private RecyclerView.Adapter mAdapter;
+    private CourseRCAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private static final String TAG = "MainActivity";
+
+    private final CourseViewModel courseViewModel;
+
+    public CourseListFragment(CourseViewModel courseViewModel) {
+        this.courseViewModel = courseViewModel;
+    }
 
     @Nullable
     @Override
@@ -58,10 +67,21 @@ public class CourseListFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new CourseRCAdapter(getContext(), viewItems);
+        mAdapter = new CourseRCAdapter(getContext(), viewItems, courseViewModel);
         mRecyclerView.setAdapter(mAdapter);
 
+        // room
+        courseViewModel.getAllCourses().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                mAdapter.submitList(courses);
+            }
+        });
+
+
         addItemsFromJSON();
+
+        Log.i(TAG, "onViewCreated: " + viewItems.get(0));
     }
 
     private void addItemsFromJSON() {
@@ -85,7 +105,19 @@ public class CourseListFragment extends Fragment {
                 int id = itemObj.getInt("id");
                 String exam_time = itemObj.getString("exam_time");
 
-                Course course = new Course(info, course_id, course_number, name, units, capacity, instructor, class_time, id, exam_time);
+                ArrayList<Float> startTimes = new ArrayList<>();
+                ArrayList<Float> endTimes = new ArrayList<>();
+                ArrayList<Integer> days = new ArrayList<>();
+
+                JSONArray times = new JSONArray(class_time);
+                for (int j = 0; j < times.length(); j++) {
+                    JSONObject obj = times.getJSONObject(j);
+                    startTimes.add(Float.parseFloat(obj.getString("start")));
+                    endTimes.add(Float.parseFloat(obj.getString("end")));
+                    days.add(Integer.parseInt(obj.getString("day")));
+                }
+
+                Course course = new Course(info, course_id, course_number, name, units, capacity, instructor, class_time, id, exam_time, startTimes, endTimes, days);
                 viewItems.add(course);
             }
 

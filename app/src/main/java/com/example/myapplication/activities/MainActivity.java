@@ -3,14 +3,18 @@ package com.example.myapplication.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.myapplication.adapters.CourseRCAdapter;
 import com.example.myapplication.adapters.MainTabAdapter;
 import com.example.myapplication.fragments.CourseListFragment;
 import com.example.myapplication.fragments.ScheduleFragment;
 import com.example.myapplication.models.Course;
 import com.example.myapplication.R;
+import com.example.myapplication.viewmodels.CourseViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    private CourseViewModel courseViewModel;
+
     private MainTabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
@@ -39,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
+        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
+
         adapter = new MainTabAdapter(this);
-        adapter.addFragment(new CourseListFragment(), getString(R.string.tab_course_list));
-        adapter.addFragment(new ScheduleFragment(), getString(R.string.tab_schedule));
+        adapter.addFragment(new CourseListFragment(courseViewModel), getString(R.string.tab_course_list));
+        adapter.addFragment(new ScheduleFragment(courseViewModel), getString(R.string.tab_schedule));
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> tab.setText(adapter.getTabTitle(position))).attach();

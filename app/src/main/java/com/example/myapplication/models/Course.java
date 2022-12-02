@@ -1,11 +1,25 @@
 package com.example.myapplication.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 
+@Entity(tableName = "course_table")
 public class Course {
+
+    @PrimaryKey()
+    private int id;
 
     private String info;
     private String courseId;
@@ -15,12 +29,20 @@ public class Course {
     private int capacity;
     private String instructor;
     private String classTime;
-    private int id;
     private String examTime;
     private ArrayList<Float> startTimes = new ArrayList<>();
     private ArrayList<Float> endTimes = new ArrayList<>();
     private ArrayList<Integer> days = new ArrayList<>();
 
+    public class Day {
+        String start;
+        String end;
+        String day;
+    }
+
+//    private int[] days;
+
+    @Ignore
     public Course(String name, String info, String courseId, String courseNumber) {
         this.name = name;
         this.info = info;
@@ -29,7 +51,7 @@ public class Course {
     }
 
     public Course(String info, String courseId, String courseNumber, String name,
-                  int units, int capacity, String instructor, String classTime, int id, String examTime) {
+                  int units, int capacity, String instructor, String classTime, int id, String examTime, ArrayList<Float> startTimes, ArrayList<Float> endTimes, ArrayList<Integer> days) {
         this.info = info;
         this.courseId = courseId;
         this.courseNumber = courseNumber;
@@ -40,59 +62,14 @@ public class Course {
         this.classTime = classTime;
         this.id = id;
         this.examTime = examTime;
+        this.startTimes = startTimes;
+        this.endTimes = endTimes;
+        this.days = days;
 
+//        this.initTimes();
     }
 
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getCourseNumber() {
-        return courseNumber;
-    }
-
-    public void setCourseNumber(String courseNumber) {
-        this.courseNumber = courseNumber;
-    }
-
-    public int getUnits() {
-        return units;
-    }
-
-    public void setUnits(int units) {
-        this.units = units;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
-
-    public String getClassTime() {
+    private void initTimes() {
         StringBuilder classTimes = new StringBuilder();
         String day = "";
         Pattern p = Pattern.compile("\\d+\\.*\\d*");
@@ -152,13 +129,64 @@ public class Course {
                 }
             }
         }
-        classTimes.deleteCharAt(classTimes.length() - 1);
+//        classTimes.deleteCharAt(classTimes.length() - 1);
         this.classTime = classTimes.toString().replaceAll("\\.", ":");
         if (this.classTime.contains(".5")) {
             this.classTime = this.classTime.replaceAll(".5", ":30");
         }
-        return classTime;
+    }
 
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourseNumber() {
+        return courseNumber;
+    }
+
+    public void setCourseNumber(String courseNumber) {
+        this.courseNumber = courseNumber;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
+
+    public String getClassTime() {
+        return classTime;
     }
 
     public void setClassTime(String classTime) {
@@ -199,5 +227,55 @@ public class Course {
 
     public ArrayList<Integer> getDays() {
         return days;
+    }
+
+    public void setDays(ArrayList<Integer> days) {
+        this.days = days;
+    }
+
+    public void setStartTimes(ArrayList<Float> startTimes) {
+        this.startTimes = startTimes;
+    }
+
+    public void setEndTimes(ArrayList<Float> endTimes) {
+        this.endTimes = endTimes;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return id + "," + name + "," + courseNumber + "," + days + "," + startTimes + "," + endTimes + "," + classTime;
+    }
+
+    public static class Converters {
+        @TypeConverter
+        public ArrayList<Integer> fromString(String value) {
+            Type listType = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            return new Gson().fromJson(value, listType);
+        }
+
+        @TypeConverter
+        public String fromArrayList(ArrayList<Integer> list) {
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            return json;
+        }
+    }
+
+    public static class FloatConverters {
+        @TypeConverter
+        public ArrayList<Float> fromString(String value) {
+            Type listType = new TypeToken<ArrayList<Float>>() {
+            }.getType();
+            return new Gson().fromJson(value, listType);
+        }
+
+        @TypeConverter
+        public String fromArrayList(ArrayList<Float> list) {
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            return json;
+        }
     }
 }

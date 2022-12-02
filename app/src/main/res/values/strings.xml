@@ -3,7 +3,7 @@
     <string name="info">info</string>
     <string name="course_id">Course id</string>
     <string name="course_name">Course Name</string>
-    <string name="day">day</string>
+    <string name="day">شنبه</string>
     <string name="tab_course_list">لیست دروس</string>
     <string name="tab_schedule">برنامه هفتگی</string>
 </resources>
