@@ -33,12 +33,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CourseListFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
+    private Map<String, Integer> departmentRaw = new HashMap<String, Integer>() {
+        {
+            put("ریاضی", R.raw.c3);
+            put("فیزیک", R.raw.c5);
+            put("کامپیوتر", R.raw.c38);
+        }
+    };
+
+    private Map<String, List<Course>> departmentCourses = new HashMap<>();
+
     private List<Course> viewItems = new ArrayList<>();
+
+    private RecyclerView mRecyclerView;
+//    private List<Course> viewItems = new ArrayList<>();
 
     private CourseRCAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -66,6 +80,7 @@ public class CourseListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        readDepCourses();
 
         searchView = (SearchView) getView().findViewById(R.id.search);
 //        listView = (ListView) getView().findViewById(R.id.list_view);
@@ -126,10 +141,7 @@ public class CourseListFragment extends Fragment {
             }
         });
 
-
-        addItemsFromJSON();
-
-        Log.i(TAG, "onViewCreated: " + viewItems.get(0));
+//        Log.i(TAG, "onViewCreated: " + viewItems.get(0));
     }
 
     private void filter(String text) {
@@ -157,10 +169,19 @@ public class CourseListFragment extends Fragment {
         }
     }
 
-    private void addItemsFromJSON() {
+    private void readDepCourses() {
+
+        for (Map.Entry<String, Integer> entry : departmentRaw.entrySet()) {
+            addItemsFromJSON(entry.getValue(), entry.getKey());
+        }
+
+    }
+
+    private void addItemsFromJSON(int rawId, String dep) {
         try {
 
-            String jsonDataString = readJSONDataFromFile();
+
+            String jsonDataString = readJSONDataFromFile(rawId);
             JSONArray jsonArray = new JSONArray(jsonDataString);
 
             for (int i = 0; i < jsonArray.length(); ++i) {
@@ -190,24 +211,27 @@ public class CourseListFragment extends Fragment {
                     days.add(Integer.parseInt(obj.getString("day")));
                 }
 
-                Course course = new Course(info, course_id, course_number, name, units, capacity, instructor, class_time, id, exam_time, startTimes, endTimes, days);
+                Course course = new Course(info, course_id, course_number, name, units, capacity, instructor, class_time, id, exam_time, startTimes, endTimes, days, dep);
                 viewItems.add(course);
             }
+
+            departmentCourses.put(dep, viewItems);
 
         } catch (JSONException | IOException e) {
             Log.d(TAG, "addItemsFromJSON: ", e);
         }
     }
 
-    private String readJSONDataFromFile() throws IOException {
+    private String readJSONDataFromFile(int rawId) throws IOException {
 
         InputStream inputStream = null;
         StringBuilder builder = new StringBuilder();
 
+
         try {
 
             String jsonString = null;
-            inputStream = getResources().openRawResource(R.raw.c38);
+            inputStream = getResources().openRawResource(rawId);
             BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(inputStream, "UTF-8"));
 

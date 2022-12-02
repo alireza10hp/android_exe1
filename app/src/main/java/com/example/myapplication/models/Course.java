@@ -52,7 +52,7 @@ public class Course {
     }
 
     public Course(String info, String courseId, String courseNumber, String name,
-                  int units, int capacity, String instructor, String classTime, int id, String examTime, ArrayList<Float> startTimes, ArrayList<Float> endTimes, ArrayList<Integer> days) {
+                  int units, int capacity, String instructor, String classTime, int id, String examTime, ArrayList<Float> startTimes, ArrayList<Float> endTimes, ArrayList<Integer> days, String department) {
         this.info = info;
         this.courseId = courseId;
         this.courseNumber = courseNumber;
@@ -66,6 +66,7 @@ public class Course {
         this.startTimes = startTimes;
         this.endTimes = endTimes;
         this.days = days;
+        this.department = department;
 
 //        this.initTimes();
     }
