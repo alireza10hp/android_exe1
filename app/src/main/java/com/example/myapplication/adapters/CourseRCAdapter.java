@@ -17,13 +17,14 @@ import com.example.myapplication.dialogs.SelectCourseDialog;
 import com.example.myapplication.models.Course;
 import com.example.myapplication.viewmodels.CourseViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseRCAdapter extends ListAdapter<Course, RecyclerView.ViewHolder> {
 
     private static final int TYPE = 1;
     private final Context context;
-    private final List<Course> listRecyclerItem;
+    private List<Course> listRecyclerItem;
 
     private CourseViewModel viewModel;
 
@@ -88,6 +89,18 @@ public class CourseRCAdapter extends ListAdapter<Course, RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return listRecyclerItem.size();
+    }
+
+    // method for filtering our recyclerview items.
+    public void filterList(List<Course> filterList) {
+        // below line is to add our filtered
+        // list in our course array list.
+//        listRecyclerItem.clear();
+//        listRecyclerItem.addAll(filterList);
+        listRecyclerItem = filterList;
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

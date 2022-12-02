@@ -5,6 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.adapters.CourseRCAdapter;
 import com.example.myapplication.models.Course;
 import com.example.myapplication.viewmodels.CourseViewModel;
@@ -42,6 +47,12 @@ public class CourseListFragment extends Fragment {
 
     private final CourseViewModel courseViewModel;
 
+    ListView listView;
+    SearchView searchView;
+
+    ArrayList<String> list;
+    ArrayAdapter<Course> searchAdapter;
+
     public CourseListFragment(CourseViewModel courseViewModel) {
         this.courseViewModel = courseViewModel;
     }
@@ -55,6 +66,43 @@ public class CourseListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        searchView = (SearchView) getView().findViewById(R.id.search);
+//        listView = (ListView) getView().findViewById(R.id.list_view);
+
+//        searchAdapter = new ArrayAdapter<Course>(getContext(), android.R.layout.simple_list_item_1, viewItems);
+//        listView.setAdapter(searchAdapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                if (list.contains(query)) {
+//                    searchAdapter.getFilter().filter(query);
+//                } else {
+//                    Toast.makeText(getContext(), "No Match found", Toast.LENGTH_LONG).show();
+//                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                searchAdapter.getFilter().filter(newText);
+                filter(newText);
+                return false;
+            }
+        });
+
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.i(TAG, "---------------------onFocusChange: " + hasFocus);
+                if (hasFocus) {
+                    listView.setVisibility(View.VISIBLE);
+                } else {
+                    listView.setVisibility(View.GONE);
+                }
+            }
+        });
 
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
 
@@ -82,6 +130,31 @@ public class CourseListFragment extends Fragment {
         addItemsFromJSON();
 
         Log.i(TAG, "onViewCreated: " + viewItems.get(0));
+    }
+
+    private void filter(String text) {
+        // creating a new array list to filter our data.
+        ArrayList<Course> filteredList = new ArrayList<Course>();
+
+        // running a for loop to compare elements.
+        for (Course item : viewItems) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.toString().toLowerCase().contains(text.toLowerCase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredList.add(item);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            // if no item is added in filtered list we are
+            // displaying a toast message as no data found.
+//            mAdapter.filterList(viewItems);
+            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+        } else {
+            // at last we are passing that filtered
+            // list to our adapter class.
+            mAdapter.filterList(filteredList);
+        }
     }
 
     private void addItemsFromJSON() {
