@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.dialogs.DeleteCourseDialog;
 import com.example.myapplication.dialogs.SelectCourseDialog;
 import com.example.myapplication.models.Course;
 import com.example.myapplication.viewmodels.CourseViewModel;
@@ -86,10 +87,10 @@ public class CourseDaysRCAdapter extends ListAdapter<Course, CourseDaysRCAdapter
         @Override
         public void onClick(View view) {
             int position = this.getAdapterPosition();
-//            Course course = listRecyclerItem.get(position);
+            Course course = getItem(position);
 
-//            SelectCourseDialog d = new SelectCourseDialog(context, viewModel, course);
-//            d.show();
+            DeleteCourseDialog d = new DeleteCourseDialog(context, viewModel, course);
+            d.show();
         }
     }
 }
