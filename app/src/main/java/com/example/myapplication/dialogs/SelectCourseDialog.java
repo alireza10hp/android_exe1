@@ -18,6 +18,7 @@ import com.example.myapplication.models.Course;
 import com.example.myapplication.viewmodels.CourseViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SelectCourseDialog extends Dialog implements View.OnClickListener {
@@ -76,8 +77,8 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.btn_select:
-                if (selectedCourses.size() == 0 || !isOverlapped()) {
-                    selectedCourses.add(course);
+                if (viewModel.getAllCourses().getValue().size() == 0 || !isOverlapped(course)) {
+//                    selectedCourses.add(course);
                     saveCourse(course);
                 } else {
                     Toast.makeText(context, "برنامه درس انتخابی با دیگر دروس انتخاب شده تداخل دارد", Toast.LENGTH_SHORT).show();
@@ -89,19 +90,20 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
         dismiss();
     }
 
-    public boolean isOverlapped() {
-//        for (int i = 0; i < selectedCourses.size(); i++) {
-//            int dayLength = selectedCourses.get(i).getDays().size();
-//            for (int j = 0; j < dayLength; j++) {
-//                for (int k = 0; k < course.getDays().size(); k++) {
-//                    if (Objects.equals(selectedCourses.get(i).getDays().get(j), course.getDays().get(k))) {
-//                        if (selectedCourses.get(i).getEndTimes().get(j) > course.getStartTimes().get(k) ||
-//                                selectedCourses.get(i).getStartTimes().get(j) < course.getEndTimes().get(k))
-//                            return true;
-//                    }
-//                }
-//            }
-//        }
+    public boolean isOverlapped(Course course) {
+        List<Course> courses = viewModel.getAllCourses().getValue();
+        for (int i = 0; i < courses.size(); i++) {
+            int dayLength = courses.get(i).getDays().size();
+            for (int j = 0; j < dayLength; j++) {
+                for (int k = 0; k < course.getDays().size(); k++) {
+                    if (Objects.equals(courses.get(i).getDays().get(j), course.getDays().get(k))) {
+                        if (courses.get(i).getEndTimes().get(j) > course.getStartTimes().get(k) ||
+                                courses.get(i).getStartTimes().get(j) < course.getEndTimes().get(k))
+                            return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
