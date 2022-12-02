@@ -1,9 +1,17 @@
 <resources>
-    <string name="app_name">Terminator</string>
-    <string name="info">info</string>
-    <string name="course_id">Course id</string>
-    <string name="course_name">Course Name</string>
+    <string name="app_name">ترمیناتور</string>
+    <string name="info">اطلاعات</string>
+    <string name="course_id">شماره درس</string>
+    <string name="course_name">نام درس</string>
     <string name="day">شنبه</string>
     <string name="tab_course_list">لیست دروس</string>
     <string name="tab_schedule">برنامه هفتگی</string>
+    <string name="cancel">انصراف</string>
+    <string name="select">انتخاب</string>
+    <string name="name">نام درس</string>
+    <string name="instructor">نام استاد</string>
+    <string name="department">دانشکده</string>
+    <string name="unit">واحد</string>
+    <string name="capacity">ظرفیت</string>
+    <string name="class_times">زمان کلاس</string>
 </resources>

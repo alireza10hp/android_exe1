@@ -26,7 +26,7 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
     private final Course course;
 
     private Button cancel, select;
-    private TextView name, info, courseNumber;
+    private TextView name, instructor, department, courseId, unit, capacity, classTimes, info;
 
     ArrayList<Course> selectedCourses = new ArrayList<>();
 
@@ -50,12 +50,23 @@ public class SelectCourseDialog extends Dialog implements View.OnClickListener {
         cancel.setOnClickListener(this);
         select.setOnClickListener(this);
 
-        name = (TextView) findViewById(R.id.course_name);
+        name = (TextView) findViewById(R.id.name);
         name.setText(course.getName());
-        info = (TextView) findViewById(R.id.course_info);
+        instructor = (TextView) findViewById(R.id.instructor);
+        instructor.setText(course.getInstructor());
+        department = (TextView) findViewById(R.id.department);
+        department.setText(course.getDepartment());
+        courseId = (TextView) findViewById(R.id.course_id);
+        courseId.setText(course.getCourseId());
+        unit = (TextView) findViewById(R.id.unit);
+        unit.setText(String.valueOf(course.getUnits()));
+        capacity = (TextView) findViewById(R.id.capacity);
+        capacity.setText(String.valueOf(course.getCapacity()));
+        classTimes = (TextView) findViewById(R.id.class_times);
+        classTimes.setText(course.getClassTime());
+        info = (TextView) findViewById(R.id.info);
         info.setText(course.getInfo());
-        courseNumber = (TextView) findViewById(R.id.course_number);
-        courseNumber.setText(course.getCourseNumber());
+
     }
 
     @Override

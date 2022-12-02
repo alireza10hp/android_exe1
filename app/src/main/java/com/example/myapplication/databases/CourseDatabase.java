@@ -14,7 +14,7 @@ import com.example.myapplication.dao.CourseDao;
 import com.example.myapplication.models.Course;
 
 // adding annotation for our database entities and db version.
-@Database(entities = {Course.class}, version = 5)
+@Database(entities = {Course.class}, version = 6)
 @TypeConverters({Course.Converters.class, Course.FloatConverters.class})
 public abstract class CourseDatabase extends RoomDatabase {
 

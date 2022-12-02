@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
 
@@ -19,16 +20,23 @@
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"
             android:clickable="true"
-            android:text="cancel" />
+            android:focusable="true"
+            android:backgroundTint="@color/cancel"
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/btn_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
             android:clickable="true"
-            android:text="select" />
+            android:focusable="true"
+            android:text="@string/select" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

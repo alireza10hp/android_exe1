@@ -18,21 +18,23 @@
             android:text="@string/course_name"
             android:textStyle="bold"
             android:id="@+id/name"
-            android:textSize="28sp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="match_parent"
             android:text="@string/course_id"
-            android:textSize="23sp"
+            android:textSize="15sp"
             android:id="@+id/course_id"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="match_parent"
             android:text="@string/info"
-            android:textSize="23sp"
+            android:textSize="15sp"
             android:id="@+id/info"
+            android:maxLines="1"
+            android:ellipsize="marquee"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>

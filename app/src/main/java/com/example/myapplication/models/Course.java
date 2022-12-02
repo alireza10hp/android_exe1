@@ -28,6 +28,7 @@ public class Course {
     private int units;
     private int capacity;
     private String instructor;
+    private String department;
     private String classTime;
     private String examTime;
     private ArrayList<Float> startTimes = new ArrayList<>();
@@ -239,6 +240,14 @@ public class Course {
 
     public void setEndTimes(ArrayList<Float> endTimes) {
         this.endTimes = endTimes;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     @NonNull
