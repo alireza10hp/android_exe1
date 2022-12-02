@@ -63,6 +63,7 @@ public class CourseDaysRCAdapter extends ListAdapter<Course, CourseDaysRCAdapter
         holder.name.setText(course.getName());
         holder.course_id.setText(course.getCourseId());
         holder.info.setText(course.getInfo());
+//        holder.class_times.setText(course.getClassTime());
     }
 
 //    @Override
@@ -74,6 +75,7 @@ public class CourseDaysRCAdapter extends ListAdapter<Course, CourseDaysRCAdapter
         public TextView name;
         public TextView info;
         public TextView course_id;
+        public TextView class_times;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,6 +84,7 @@ public class CourseDaysRCAdapter extends ListAdapter<Course, CourseDaysRCAdapter
             name = itemView.findViewById(R.id.name);
             info = itemView.findViewById(R.id.info);
             course_id = itemView.findViewById(R.id.course_id);
+            class_times = itemView.findViewById(R.id.class_times);
         }
 
         @Override
